@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://ckvig5xchpfxw"]
+
+[ext_resource type="Texture2D" uid="uid://btkkjke5xrw23" path="res://src/main/art/buttons/chicago/Chicago4.png" id="1_d1m8i"]
+
+[resource]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("1_d1m8i")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0

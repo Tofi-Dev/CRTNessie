@@ -1,0 +1,61 @@
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://d34v4epdlqhh4"]
+
+[ext_resource type="StyleBox" uid="uid://batthoyhcklcm" path="res://src/main/themes/styleboxes/95/bottom_normal.tres" id="1_sa5tv"]
+[ext_resource type="StyleBox" uid="uid://ckvig5xchpfxw" path="res://src/main/themes/styleboxes/95/bottom_disabled.tres" id="1_u45lw"]
+[ext_resource type="StyleBox" uid="uid://ixt7i0rpredd" path="res://src/main/themes/styleboxes/95/bottom_hover.tres" id="2_jvfd8"]
+[ext_resource type="StyleBox" uid="uid://c5judbep64wjv" path="res://src/main/themes/styleboxes/95/bottom_pressed.tres" id="4_j1yeo"]
+[ext_resource type="FontFile" uid="uid://dxdysc86u7sce" path="res://src/main/fonts/Battlenet.ttf" id="5_jf8sx"]
+[ext_resource type="Texture2D" uid="uid://q0x2w0mw0ya8" path="res://src/main/art/buttons/chicago/scroll.png" id="5_p2vec"]
+[ext_resource type="Texture2D" uid="uid://du3i7gkdy0uba" path="res://src/main/art/buttons/chicago/bar.png" id="6_34bpx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbf82"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7ikf"]
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p1gld"]
+texture = ExtResource("6_34bpx")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0o30u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pnom7"]
+
+[resource]
+default_font = ExtResource("5_jf8sx")
+default_font_size = 16
+Button/constants/outline_size = 2
+Button/styles/disabled = ExtResource("1_u45lw")
+Button/styles/focus = SubResource("StyleBoxEmpty_tbf82")
+Button/styles/hover = ExtResource("2_jvfd8")
+Button/styles/normal = ExtResource("1_sa5tv")
+Button/styles/pressed = ExtResource("4_j1yeo")
+HSlider/icons/grabber = ExtResource("5_p2vec")
+HSlider/icons/grabber_disabled = ExtResource("5_p2vec")
+HSlider/icons/grabber_highlight = ExtResource("5_p2vec")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_p7ikf")
+HSlider/styles/slider = SubResource("StyleBoxTexture_p1gld")
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 2
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_0o30u")
+LineEdit/styles/normal = ExtResource("1_u45lw")
+LineEdit/styles/read_only = ExtResource("1_u45lw")
+OptionButton/styles/disabled = ExtResource("1_u45lw")
+OptionButton/styles/disabled_mirrored = ExtResource("1_u45lw")
+OptionButton/styles/focus = SubResource("StyleBoxEmpty_pnom7")
+OptionButton/styles/hover = ExtResource("2_jvfd8")
+OptionButton/styles/hover_mirrored = ExtResource("2_jvfd8")
+OptionButton/styles/normal = ExtResource("1_sa5tv")
+OptionButton/styles/normal_mirrored = ExtResource("1_sa5tv")
+OptionButton/styles/pressed = ExtResource("4_j1yeo")
+OptionButton/styles/pressed_mirrored = ExtResource("4_j1yeo")
+Panel/styles/panel = ExtResource("1_sa5tv")

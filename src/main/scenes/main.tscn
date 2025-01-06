@@ -1,0 +1,366 @@
+[gd_scene load_steps=19 format=3 uid="uid://cdpriq3ceeans"]
+
+[ext_resource type="Theme" uid="uid://cbu3vggrnr15" path="res://src/main/themes/default.tres" id="1_0imq3"]
+[ext_resource type="Shader" path="res://src/main/shaders/crt.gdshader" id="1_am6uu"]
+[ext_resource type="Script" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
+[ext_resource type="Texture2D" uid="uid://jv87xuvpxc24" path="res://src/main/art/grid.png" id="3_m70oi"]
+[ext_resource type="AudioStream" uid="uid://crq12et1jvw2v" path="res://src/main/sfx/outcome-success.mp3" id="3_tdi5y"]
+[ext_resource type="Texture2D" uid="uid://maj7clx5bxcm" path="res://src/main/art/logohd.png" id="4_ddcem"]
+[ext_resource type="Texture2D" uid="uid://cdcnp8w7h724s" path="res://src/main/art/buttons/chicago/logopixel.png" id="4_h1ifi"]
+[ext_resource type="Texture2D" uid="uid://cfyfdc7dfoh8d" path="res://src/main/art/buttons/grids/grid.png" id="5_6vkxv"]
+[ext_resource type="Texture2D" uid="uid://023q05eg68i0" path="res://src/main/art/buttons/default/logopixel.png" id="6_iwdne"]
+[ext_resource type="Script" path="res://src/main/scenes/credits.gd" id="7_fgh44"]
+[ext_resource type="Texture2D" uid="uid://cejh5uf5jgmjw" path="res://src/main/art/buttons/grids/grid95.png" id="7_qyeat"]
+[ext_resource type="Script" path="res://src/main/scenes/Credits_Button.gd" id="7_rryy0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m72bm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_626g7"]
+shader = ExtResource("1_am6uu")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 8.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+shader_parameter/SCREEN_TEXTURE = SubResource("CompressedTexture2D_m72bm")
+
+[sub_resource type="InputEventKey" id="InputEventKey_gk57t"]
+device = -1
+ctrl_pressed = true
+keycode = 79
+unicode = 111
+
+[sub_resource type="Shortcut" id="Shortcut_alve0"]
+events = [SubResource("InputEventKey_gk57t")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_2d7ji"]
+device = -1
+ctrl_pressed = true
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_rntd4"]
+events = [SubResource("InputEventKey_2d7ji")]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_0imq3")
+script = ExtResource("1_s7fn7")
+logo_textures = Array[Texture2D]([ExtResource("6_iwdne"), ExtResource("4_ddcem"), ExtResource("4_h1ifi")])
+grid_textures = Array[Texture2D]([ExtResource("5_6vkxv"), ExtResource("5_6vkxv"), ExtResource("7_qyeat")])
+metadata/_edit_vertical_guides_ = [-2016.0, 3153.0]
+
+[node name="Grid" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("3_m70oi")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 4000)
+
+[node name="LoadFile" type="FileDialog" parent="."]
+mode = 2
+title = "Open a File"
+position = Vector2i(0, 36)
+size = Vector2i(877, 180)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="SaveFile" type="FileDialog" parent="."]
+ok_button_text = "Save"
+access = 2
+use_native_dialog = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="ScrollContainer/SubViewportContainer"]
+unique_name_in_owner = true
+transparent_bg = true
+handle_input_locally = false
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_626g7")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tdi5y")
+autoplay = true
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 110.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="CloseFile" type="Button" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+z_index = 5
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+tooltip_text = "Closes the current file."
+shortcut = SubResource("Shortcut_alve0")
+text = "Close"
+
+[node name="SelectIMG" type="Button" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+z_index = 5
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+tooltip_text = "Load an image from your computer."
+shortcut = SubResource("Shortcut_alve0")
+text = "Load"
+
+[node name="SaveIMG" type="Button" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+z_index = 5
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+tooltip_text = "Save the modified image."
+shortcut = SubResource("Shortcut_rntd4")
+text = "Save"
+
+[node name="SpinBox" type="SpinBox" parent="Panel/HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+tooltip_text = "Modifes the horizontal stretch of the image."
+min_value = 1.0
+max_value = 2.0
+step = 0.05
+value = 1.0
+prefix = "Ascept:"
+
+[node name="Scale" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.819
+anchor_top = 0.083
+anchor_right = 0.985
+anchor_bottom = 0.917
+offset_left = 0.511902
+offset_top = -3.984
+offset_right = 0.279907
+offset_bottom = 3.984
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Scale"]
+layout_mode = 2
+text = "Scale"
+horizontal_alignment = 1
+
+[node name="Scale" type="HSlider" parent="Panel/Scale"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Affects the zoom and the final size of the image."
+min_value = 1.0
+max_value = 5.0
+step = 0.25
+value = 2.0
+
+[node name="StartingContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -98.0
+offset_right = 88.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="TextureRect" parent="StartingContainer"]
+layout_mode = 2
+texture = ExtResource("6_iwdne")
+
+[node name="Button" type="Button" parent="StartingContainer" node_paths=PackedStringArray("credits_node")]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+tooltip_text = "List of Creators and Assets"
+text = "Credits"
+script = ExtResource("7_rryy0")
+credits_node = NodePath("../../Credits")
+
+[node name="HSeparator" type="HSeparator" parent="StartingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="StartingContainer"]
+layout_mode = 2
+text = "Theme"
+horizontal_alignment = 1
+
+[node name="ThemePicker" type="OptionButton" parent="StartingContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Change the Program's theme."
+selected = 1
+item_count = 3
+popup/item_0/text = "Default"
+popup/item_1/text = "HD"
+popup/item_1/id = 1
+popup/item_2/text = "Chicago"
+popup/item_2/id = 2
+
+[node name="Credits" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_fgh44")
+
+[node name="ColorRect" type="ColorRect" parent="Credits"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -492.0
+offset_top = -208.0
+offset_right = 522.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 28.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Credits/ScrollContainer"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "
+CRTNessie
+Made by Tofi_Dev
+
+Credits:
+Most art and programming:
+Tofi_Dev
+
+Default Logo:
+Skulldragger
+
+Chicago and HD Logo:
+Tofi_Dev
+
+Crt Shader:
+c64cosmin from
+Godotshaders.com
+
+
+Made with Godot Engine 4.3
+
+"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="OKBtn" type="Button" parent="Credits"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -33.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
+[node name="QuitBtn" type="Button" parent="Credits"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 21.0
+grow_horizontal = 0
+text = "X"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -42.0
+offset_top = -16.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Alpha 1"
+
+[connection signal="value_changed" from="Panel/HBoxContainer/SpinBox" to="." method="_aspect_ratio"]
+[connection signal="value_changed" from="Panel/Scale/Scale" to="." method="_Scale_Changed"]
+[connection signal="item_selected" from="StartingContainer/ThemePicker" to="." method="_Theme_Changed"]

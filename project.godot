@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="CRTNessie"
+run/main_scene="res://src/main/scenes/main.tscn"
+config/features=PackedStringArray("4.3")
+boot_splash/bg_color=Color(0.203922, 0.133333, 0.258824, 1)
+boot_splash/image="res://src/main/art/buttons/default/logopixel.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://src/main/art/logofile.png"
+
+[display]
+
+window/per_pixel_transparency/allowed=true
+
+[gui]
+
+theme/custom_font="res://src/main/fonts/Gemma.ttf"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
