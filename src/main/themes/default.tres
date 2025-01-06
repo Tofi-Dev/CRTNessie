@@ -1,8 +1,8 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cbu3vggrnr15"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://cbu3vggrnr15"]
 
 [ext_resource type="FontFile" uid="uid://cjrkmy6gyukek" path="res://src/main/fonts/Gemma.ttf" id="1_dyv1c"]
 [ext_resource type="StyleBox" uid="uid://cnjbdiuwketl" path="res://src/main/themes/styleboxes/button_hover.tres" id="2_68bcx"]
-[ext_resource type="StyleBox" uid="uid://dl687miwrdj5j" path="res://src/main/themes/styleboxes/button_disabled.tres" id="2_lvqne"]
+[ext_resource type="StyleBox" uid="uid://dl687miwrdj5j" path="res://src/main/scenes/button_disabled.tres" id="2_384wi"]
 [ext_resource type="StyleBox" uid="uid://cailv44la75uw" path="res://src/main/themes/styleboxes/button_default.tres" id="3_hhp4o"]
 [ext_resource type="StyleBox" uid="uid://bbqb0av8318u8" path="res://src/main/themes/styleboxes/button_pressed.tres" id="4_k0u18"]
 [ext_resource type="Texture2D" uid="uid://bf03viqsd8xhi" path="res://src/main/art/panel/Panel.png" id="5_ew07f"]
@@ -39,12 +39,20 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h10wu"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ya7uc"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6g8so"]
 texture = ExtResource("5_ew07f")
 texture_margin_left = 8.0
 texture_margin_top = 6.0
 texture_margin_right = 8.0
 texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qgg7u"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
 
 [resource]
 default_font = ExtResource("1_dyv1c")
@@ -67,7 +75,7 @@ Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
 Button/fonts/font = ExtResource("1_dyv1c")
-Button/styles/disabled = ExtResource("2_lvqne")
+Button/styles/disabled = ExtResource("2_384wi")
 Button/styles/focus = SubResource("StyleBoxEmpty_mxawl")
 Button/styles/hover = ExtResource("2_68bcx")
 Button/styles/normal = ExtResource("3_hhp4o")
@@ -79,6 +87,12 @@ HSlider/styles/grabber_area = SubResource("StyleBoxFlat_2lb3i")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_887gy")
 HSlider/styles/slider = SubResource("StyleBoxFlat_hl4w2")
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_h10wu")
-LineEdit/styles/normal = ExtResource("2_lvqne")
-LineEdit/styles/read_only = ExtResource("2_lvqne")
+LineEdit/styles/normal = ExtResource("2_384wi")
+LineEdit/styles/read_only = ExtResource("2_384wi")
+MenuButton/styles/disabled = ExtResource("2_384wi")
+MenuButton/styles/focus = SubResource("StyleBoxEmpty_ya7uc")
+MenuButton/styles/hover = ExtResource("2_68bcx")
+MenuButton/styles/normal = ExtResource("3_hhp4o")
+MenuButton/styles/pressed = ExtResource("4_k0u18")
 Panel/styles/panel = SubResource("StyleBoxTexture_6g8so")
+ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_qgg7u")

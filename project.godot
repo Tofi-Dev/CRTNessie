@@ -23,6 +23,10 @@ config/icon="res://src/main/art/logofile.png"
 
 window/per_pixel_transparency/allowed=true
 
+[global_group]
+
+image=""
+
 [gui]
 
 theme/custom_font="res://src/main/fonts/Gemma.ttf"

@@ -23,6 +23,10 @@ extends Control
 @export var logo_textures : Array[Texture2D]
 @export var grid_textures : Array[Texture2D]
 
+#Shader Editor
+@onready var shader_editor = get_node("%ShaderEditor")
+@onready var shader_editor_button = get_node("%ShaderEditorButton")
+
 var aspect_ratio = 1
 
 var allowed = ["*.png", "*.jpg", "*.jpeg", "*.bmp"]
@@ -41,10 +45,12 @@ func _ready():
 	savefile.set_filters(PackedStringArray(allowed))
 	select_image_button.connect("pressed", Callable(self, "_on_select_image_button_pressed"))
 	save_image_button.connect("pressed", Callable(self, "_on_save_image_button_pressed"))
+	shader_editor_button.connect("pressed", Callable(self, "_on_shader_editor_button_pressed"))
 	close_current.connect("pressed", Callable(self, "unload_image"))
 
 	loadfile.connect("file_selected", Callable(self, "_on_file_selected"))
 	savefile.connect("file_selected", Callable(self, "_on_file_saved"))
+	
 
 
 func _on_file_selected(path):
@@ -101,16 +107,22 @@ func _process(delta: float) -> void:
 	if file_loaded:
 		logo.visible = false
 		save_image_button.disabled = false
-		close_current.visible = true
+		close_current.disabled = false
+		shader_editor_button.disabled = false
+		
 	else:
 		save_image_button.disabled = true
 		logo.visible = true
-		close_current.visible = false
+		close_current.disabled = true
+		shader_editor_button.disabled = true
 
 func _Theme_Changed(index:int) -> void:
 	change_theme(index)
 	theme_id = index
 	save_settings()
+
+func _on_shader_editor_button_pressed():
+	shader_editor.visible = !shader_editor.visible
 
 func change_theme(index:int) -> void:
 	logo.get_child(0).texture = logo_textures[index]

@@ -1,7 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://cdpriq3ceeans"]
 
 [ext_resource type="Theme" uid="uid://cbu3vggrnr15" path="res://src/main/themes/default.tres" id="1_0imq3"]
-[ext_resource type="Shader" path="res://src/main/shaders/crt.gdshader" id="1_am6uu"]
 [ext_resource type="Script" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
 [ext_resource type="Texture2D" uid="uid://jv87xuvpxc24" path="res://src/main/art/grid.png" id="3_m70oi"]
 [ext_resource type="AudioStream" uid="uid://crq12et1jvw2v" path="res://src/main/sfx/outcome-success.mp3" id="3_tdi5y"]
@@ -12,26 +11,9 @@
 [ext_resource type="Script" path="res://src/main/scenes/credits.gd" id="7_fgh44"]
 [ext_resource type="Texture2D" uid="uid://cejh5uf5jgmjw" path="res://src/main/art/buttons/grids/grid95.png" id="7_qyeat"]
 [ext_resource type="Script" path="res://src/main/scenes/Credits_Button.gd" id="7_rryy0"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m72bm"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_626g7"]
-shader = ExtResource("1_am6uu")
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/scan_line_amount = 1.0
-shader_parameter/warp_amount = 0.1
-shader_parameter/noise_amount = 0.03
-shader_parameter/interference_amount = 0.2
-shader_parameter/grille_amount = 0.1
-shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.5
-shader_parameter/roll_line_amount = 0.0
-shader_parameter/roll_speed = 8.0
-shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
-shader_parameter/SCREEN_TEXTURE = SubResource("CompressedTexture2D_m72bm")
+[ext_resource type="Material" uid="uid://clyj1qh7f4om4" path="res://src/main/shaders/shader_resources/CRT.tres" id="9_1c2k5"]
+[ext_resource type="Script" path="res://src/main/scenes/shader_editor.gd" id="13_f8lx2"]
+[ext_resource type="PackedScene" uid="uid://scs3v3s5popn" path="res://src/main/scenes/properity/PropertyEdit.tscn" id="14_lw2q4"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_gk57t"]
 device = -1
@@ -51,7 +33,7 @@ unicode = 115
 [sub_resource type="Shortcut" id="Shortcut_rntd4"]
 events = [SubResource("InputEventKey_2d7ji")]
 
-[node name="Control" type="Control"]
+[node name="APP" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,6 +53,7 @@ texture = ExtResource("3_m70oi")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 4000, 4000)
+metadata/_edit_lock_ = true
 
 [node name="LoadFile" type="FileDialog" parent="."]
 mode = 2
@@ -109,9 +92,9 @@ handle_input_locally = false
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SubViewportContainer/SubViewport"]
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SubViewportContainer/SubViewport" groups=["image"]]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_626g7")
+material = ExtResource("9_1c2k5")
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
@@ -164,6 +147,15 @@ layout_mode = 2
 tooltip_text = "Save the modified image."
 shortcut = SubResource("Shortcut_rntd4")
 text = "Save"
+
+[node name="ShaderEditorButton" type="Button" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+z_index = 5
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+tooltip_text = "Edit how the shader behaves."
+shortcut = SubResource("Shortcut_rntd4")
+text = "Shader Properites"
 
 [node name="SpinBox" type="SpinBox" parent="Panel/HBoxContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -259,10 +251,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
+offset_left = -136.0
+offset_top = -146.0
+offset_right = 136.0
+offset_bottom = 146.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_fgh44")
@@ -289,6 +281,7 @@ offset_top = 28.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+follow_focus = true
 
 [node name="Label" type="Label" parent="Credits/ScrollContainer"]
 custom_minimum_size = Vector2(256, 0)
@@ -359,7 +352,52 @@ offset_right = -2.0
 offset_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Alpha 1"
+text = "Alpha 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShaderEditor" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(350, 500)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.848
+anchor_top = 0.111
+anchor_right = 1.0
+anchor_bottom = 0.877
+offset_left = -144.896
+offset_top = 0.071991
+offset_bottom = 5.70398
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("13_f8lx2")
+property_silder = ExtResource("14_lw2q4")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ShaderEditor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShaderEditor/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ShaderEditor/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Shader Properites"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ShaderEditor/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 
 [connection signal="value_changed" from="Panel/HBoxContainer/SpinBox" to="." method="_aspect_ratio"]
 [connection signal="value_changed" from="Panel/Scale/Scale" to="." method="_Scale_Changed"]
