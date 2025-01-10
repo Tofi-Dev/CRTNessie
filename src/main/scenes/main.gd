@@ -17,7 +17,6 @@ extends Control
 @onready var image = $Image
 
 @onready var theme_picker = get_node("%ThemePicker")
-
 @onready var grid = get_node("Grid")
 
 @export var logo_textures : Array[Texture2D]
@@ -39,6 +38,7 @@ var theme_id = 0
 func _ready():
 	# Load Settings
 	load_settings()
+	load_uniform_cache()
 
 	# Allowed Format List
 	loadfile.set_filters(PackedStringArray(allowed))
@@ -156,3 +156,22 @@ func load_settings():
 	theme_picker.select(theme_id)
 
 	change_theme(theme_id)
+
+func save_uniform_cache():
+	var uniform_cache = ConfigFile.new()
+	for i in shader_editor.uniform_cache:
+		uniform_cache.set_value("uniforms", i, color_rect.material.get_shader_parameter(i))
+		print("Saving uniform: " + i)
+	uniform_cache.save("user://uniform_cache_" + str(color_rect.material.shader.get_rid()) + ".cfg")
+
+func load_uniform_cache():
+	var uniform_cache = ConfigFile.new()
+	if not uniform_cache.load("user://uniform_cache_" + str(color_rect.material.shader.get_rid()) + ".cfg") == OK:
+		print("Invaild cache file")
+		return
+
+	for i in uniform_cache.get_section_keys("uniforms"):
+		shader_editor.uniform_cache[i] = uniform_cache.get_value("uniforms", i)
+
+	for i in shader_editor.uniform_cache:
+		shader_editor.load_uniform(i)

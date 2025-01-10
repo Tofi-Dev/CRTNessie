@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cdpriq3ceeans"]
+[gd_scene load_steps=23 format=3 uid="uid://cdpriq3ceeans"]
 
 [ext_resource type="Theme" uid="uid://cbu3vggrnr15" path="res://src/main/themes/default.tres" id="1_0imq3"]
 [ext_resource type="Script" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
@@ -15,14 +15,23 @@
 [ext_resource type="Script" path="res://src/main/scenes/shader_editor.gd" id="13_f8lx2"]
 [ext_resource type="PackedScene" uid="uid://scs3v3s5popn" path="res://src/main/scenes/properity/PropertyEdit.tscn" id="14_lw2q4"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_gk57t"]
+[sub_resource type="InputEventKey" id="InputEventKey_a3sn5"]
+device = -1
+ctrl_pressed = true
+keycode = 87
+unicode = 119
+
+[sub_resource type="Shortcut" id="Shortcut_0syl7"]
+events = [SubResource("InputEventKey_a3sn5")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_y45aq"]
 device = -1
 ctrl_pressed = true
 keycode = 79
 unicode = 111
 
 [sub_resource type="Shortcut" id="Shortcut_alve0"]
-events = [SubResource("InputEventKey_gk57t")]
+events = [SubResource("InputEventKey_y45aq")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_2d7ji"]
 device = -1
@@ -32,6 +41,15 @@ unicode = 115
 
 [sub_resource type="Shortcut" id="Shortcut_rntd4"]
 events = [SubResource("InputEventKey_2d7ji")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_8txf8"]
+device = -1
+ctrl_pressed = true
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_gik1s"]
+events = [SubResource("InputEventKey_8txf8")]
 
 [node name="APP" type="Control"]
 layout_mode = 3
@@ -127,7 +145,7 @@ z_index = 5
 custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 tooltip_text = "Closes the current file."
-shortcut = SubResource("Shortcut_alve0")
+shortcut = SubResource("Shortcut_0syl7")
 text = "Close"
 
 [node name="SelectIMG" type="Button" parent="Panel/HBoxContainer"]
@@ -154,7 +172,7 @@ z_index = 5
 custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 tooltip_text = "Edit how the shader behaves."
-shortcut = SubResource("Shortcut_rntd4")
+shortcut = SubResource("Shortcut_gik1s")
 text = "Shader Properites"
 
 [node name="SpinBox" type="SpinBox" parent="Panel/HBoxContainer"]
@@ -352,7 +370,7 @@ offset_right = -2.0
 offset_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Alpha 2"
+text = "Alpha 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -385,18 +403,27 @@ offset_right = -16.0
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ShaderEditor/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ShaderEditor/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 16
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Label" type="Label" parent="ShaderEditor/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ShaderEditor/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Shader Properites"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="ShaderEditor/ScrollContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [connection signal="value_changed" from="Panel/HBoxContainer/SpinBox" to="." method="_aspect_ratio"]

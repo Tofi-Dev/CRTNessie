@@ -1,4 +1,5 @@
 extends Panel
+class_name PropertyEdit
 
 @onready var property_silder = $HBoxContainer/HSlider
 

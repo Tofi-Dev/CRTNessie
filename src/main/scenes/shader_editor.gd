@@ -1,17 +1,18 @@
 extends Panel
 
 @onready var color_rect = get_node("%ColorRect")
-@onready var vbox_container = $ScrollContainer/VBoxContainer
+@onready var vbox_container = $ScrollContainer/MarginContainer/VBoxContainer
 
 @export var property_silder : PackedScene
+
+var uniform_cache = {}
 
 
 func _ready():
 	list_shader_properties()
 
-
 func list_shader_properties():
-	print(color_rect.material.shader.get_shader_uniform_list())
+	#print(color_rect.material.shader.get_shader_uniform_list())
 	for i in color_rect.material.shader.get_shader_uniform_list():
 		print(string_splitter(i.hint_string))
 
@@ -23,8 +24,19 @@ func list_shader_properties():
 			silder.get_node("HBoxContainer/HSlider").max_value = float(string_splitter(i.hint_string)[1])
 			silder.property = i.name
 			vbox_container.add_child(silder)
+
+			uniform_cache[i.name] = i
 		else:
 			print("Ignoring.")
+
+	print("Cached:" + str(uniform_cache))
+
+func load_uniform(key):
+	color_rect.material.set_shader_parameter(key, uniform_cache[key])
+	for i in vbox_container.get_children():
+		if i is PropertyEdit:
+			if i.property == key:
+				i.get_node("HBoxContainer/HSlider").value = uniform_cache[key]
 
 func string_splitter(string : String):
 	return string.split(",", false)
@@ -33,3 +45,8 @@ func prettyify_names(string : String):
 	var temp : String = string
 	temp = temp.replace("_", " ")
 	return temp[0].to_upper() + temp.substr(1)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		print("Saving uniform cache...")
+		get_owner().save_uniform_cache()
