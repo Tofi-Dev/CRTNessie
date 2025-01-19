@@ -37,8 +37,9 @@ var theme_id = 0
 
 func _ready():
 	# Load Settings
+	boot_check()
 	load_settings()
-	load_uniform_cache()
+	#load_uniform_cache()
 
 	# Allowed Format List
 	loadfile.set_filters(PackedStringArray(allowed))
@@ -76,9 +77,17 @@ func load_image(path):
 	var texture_final = ImageTexture.create_from_image(texture)
 	
 	color_rect.visible = true
-	color_rect.size = texture.get_size()
-	color_rect.material.set_shader_parameter("resolution", Vector2(texture.get_width(), texture.get_height()))
-	color_rect.material.set_shader_parameter("SCREEN_TEXTURE", texture_final)
+	color_rect.size = texture_final.get_size()
+	color_rect.texture = texture_final
+	
+	if color_rect.material.get_shader_parameter("resolution") != null:
+		color_rect.material.set_shader_parameter("resolution", Vector2(texture.get_width(), texture.get_height()))
+		for i in shader_editor.vbox_container.get_children():
+			if i is PropertyVector2:
+				if i.property == "resolution":
+					i.get_node("HBoxContainer/X").value = texture.get_width()
+					i.get_node("HBoxContainer/Y").value = texture.get_height()
+	#color_rect.material.set_shader_parameter("SCREEN_TEXTURE", texture_final)
 	
 	update_size(image_scale.value)
 
@@ -157,21 +166,31 @@ func load_settings():
 
 	change_theme(theme_id)
 
-func save_uniform_cache():
+func save_uniform_cache(path):
 	var uniform_cache = ConfigFile.new()
+	uniform_cache.set_value("shader", "shader", color_rect.material.shader.resource_path.name)
 	for i in shader_editor.uniform_cache:
 		uniform_cache.set_value("uniforms", i, color_rect.material.get_shader_parameter(i))
 		print("Saving uniform: " + i)
-	uniform_cache.save("user://uniform_cache_" + str(color_rect.material.shader.get_rid()) + ".cfg")
+	uniform_cache.save(path)
 
-func load_uniform_cache():
+func load_uniform_cache(path):
 	var uniform_cache = ConfigFile.new()
-	if not uniform_cache.load("user://uniform_cache_" + str(color_rect.material.shader.get_rid()) + ".cfg") == OK:
+	if not uniform_cache.load(path) == OK:
 		print("Invaild cache file")
 		return
+
+	color_rect.material.shader.resource_path = uniform_cache.get_value("shader", "shader")
 
 	for i in uniform_cache.get_section_keys("uniforms"):
 		shader_editor.uniform_cache[i] = uniform_cache.get_value("uniforms", i)
 
 	for i in shader_editor.uniform_cache:
 		shader_editor.load_uniform(i)
+
+func boot_check():
+	var custom_shaders_folder = "user://shaders/"
+	if not DirAccess.dir_exists_absolute(custom_shaders_folder):
+		DirAccess.make_dir_recursive_absolute(custom_shaders_folder)
+
+	shader_editor.scan_for_shaders()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdpriq3ceeans"]
+[gd_scene load_steps=24 format=3 uid="uid://cdpriq3ceeans"]
 
 [ext_resource type="Theme" uid="uid://cbu3vggrnr15" path="res://src/main/themes/default.tres" id="1_0imq3"]
 [ext_resource type="Script" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
@@ -14,6 +14,7 @@
 [ext_resource type="Material" uid="uid://clyj1qh7f4om4" path="res://src/main/shaders/shader_resources/CRT.tres" id="9_1c2k5"]
 [ext_resource type="Script" path="res://src/main/scenes/shader_editor.gd" id="13_f8lx2"]
 [ext_resource type="PackedScene" uid="uid://scs3v3s5popn" path="res://src/main/scenes/properity/PropertyEdit.tscn" id="14_lw2q4"]
+[ext_resource type="PackedScene" uid="uid://de3def4pl0lqm" path="res://src/main/scenes/properity/PropertyEditVector2.tscn" id="15_1wcj2"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_a3sn5"]
 device = -1
@@ -88,6 +89,24 @@ ok_button_text = "Save"
 access = 2
 use_native_dialog = true
 
+[node name="SavePreset" type="FileDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+size = Vector2i(336, 139)
+ok_button_text = "Save"
+access = 2
+use_native_dialog = true
+
+[node name="LoadPreset" type="FileDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Open a File"
+size = Vector2i(336, 139)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+use_native_dialog = true
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -110,9 +129,12 @@ handle_input_locally = false
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="ColorRect" type="ColorRect" parent="ScrollContainer/SubViewportContainer/SubViewport" groups=["image"]]
+[node name="ColorRect" type="TextureRect" parent="ScrollContainer/SubViewportContainer/SubViewport" groups=["image"]]
 unique_name_in_owner = true
+texture_filter = 1
 material = ExtResource("9_1c2k5")
+offset_right = 176.0
+offset_bottom = 144.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
@@ -323,6 +345,14 @@ Crt Shader:
 c64cosmin from
 Godotshaders.com
 
+VHS Shader:
+Cyanone from
+Godotshaders.com
+
+Rainbow Shader:
+dustye from
+Godotshaders.com
+
 
 Made with Godot Engine 4.3
 
@@ -391,6 +421,7 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("13_f8lx2")
 property_silder = ExtResource("14_lw2q4")
+property_vector2 = ExtResource("15_1wcj2")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ShaderEditor"]
 layout_mode = 1
@@ -420,10 +451,39 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Shader Properites"
+text = "Shader"
 horizontal_alignment = 1
 
+[node name="ShaderSelector" type="OptionButton" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SavePreset" type="Button" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Save Preset"
+
+[node name="LoadPreset" type="Button" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load Preset"
+
+[node name="LoadUserShaderFolder" type="Button" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load User Shader Folder"
+
 [node name="HSeparator" type="HSeparator" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "shader Properties"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ShaderEditor/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [connection signal="value_changed" from="Panel/HBoxContainer/SpinBox" to="." method="_aspect_ratio"]

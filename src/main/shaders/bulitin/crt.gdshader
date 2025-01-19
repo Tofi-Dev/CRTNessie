@@ -1,8 +1,8 @@
 /*
 Shader from Godot Shaders - the free shader library.
 
-This shader is under CC0 license. Feel free to use, improve and 
-change this shader according to your needs and consider sharing 
+This shader is under CC0 license. Feel free to use, improve and
+change this shader according to your needs and consider sharing
 the modified result to godotshaders.com.
 
 Optimised and packed by @c64cosmin
@@ -21,8 +21,6 @@ https://www.shadertoy.com/view/MsjXzh
 */
 
 shader_type canvas_item;
-
-uniform sampler2D SCREEN_TEXTURE: hint_default_white, filter_nearest;
 
 uniform vec2 resolution = vec2(320.0, 180.0);
 
@@ -44,7 +42,7 @@ float random(vec2 uv){
     return fract(cos(uv.x * 83.4827 + uv.y * 92.2842) * 43758.5453123);
 }
 
-vec3 fetch_pixel(vec2 uv, vec2 off){
+vec3 fetch_pixel(sampler2D text, vec2 uv, vec2 off){
 	vec2 pos = floor(uv * resolution + off) / resolution + vec2(0.5) / resolution;
 
 	float noise = 0.0;
@@ -56,32 +54,32 @@ vec3 fetch_pixel(vec2 uv, vec2 off){
 		return vec3(0.0, 0.0, 0.0);
 	}
 
-	vec3 clr = texture(SCREEN_TEXTURE , pos, -16.0).rgb + noise;
+	vec3 clr = texture(text , pos, -16.0).rgb + noise;
 	return clr;
 }
 
 // Distance in emulated pixels to nearest texel.
-vec2 Dist(vec2 pos){ 
+vec2 Dist(vec2 pos){
 	pos = pos * resolution;
 	return - ((pos - floor(pos)) - vec2(0.5));
 }
-    
+
 // 1D Gaussian.
 float Gaus(float pos, float scale){ return exp2(scale * pos * pos); }
 
 // 3-tap Gaussian filter along horz line.
-vec3 Horz3(vec2 pos, float off){
-	vec3 b = fetch_pixel(pos, vec2(-1.0, off));
-	vec3 c = fetch_pixel(pos, vec2( 0.0, off));
-	vec3 d = fetch_pixel(pos, vec2( 1.0, off));
+vec3 Horz3(sampler2D text, vec2 pos, float off){
+	vec3 b = fetch_pixel(text ,pos, vec2(-1.0, off));
+	vec3 c = fetch_pixel(text, pos, vec2( 0.0, off));
+	vec3 d = fetch_pixel(text, pos, vec2( 1.0, off));
 	float dst = Dist(pos).x;
-	
+
 	// Convert distance to weight.
 	float scale = pixel_strength;
 	float wb = Gaus(dst - 1.0, scale);
 	float wc = Gaus(dst + 0.0, scale);
 	float wd = Gaus(dst + 1.0, scale);
-	
+
 	// Return filtered sample.
 	return (b * wb + c * wc + d * wd) / (wb + wc + wd);
 }
@@ -89,17 +87,17 @@ vec3 Horz3(vec2 pos, float off){
 // Return scanline weight.
 float Scan(vec2 pos, float off){
 	float dst = Dist(pos).y;
-	
+
 	return Gaus(dst + off, scan_line_strength);
 }
 
 // Allow nearest three lines to effect pixel.
-vec3 Tri(vec2 pos){
-	vec3 clr = fetch_pixel(pos, vec2(0.0));
+vec3 Tri(sampler2D text,vec2 pos){
+	vec3 clr = fetch_pixel(text, pos, vec2(0.0));
 	if(scan_line_amount > 0.0){
-		vec3 a = Horz3(pos,-1.0);
-		vec3 b = Horz3(pos, 0.0);
-		vec3 c = Horz3(pos, 1.0);
+		vec3 a = Horz3(text, pos,-1.0);
+		vec3 b = Horz3(text, pos, 0.0);
+		vec3 c = Horz3(text, pos, 1.0);
 
 		float wa = Scan(pos,-1.0);
 		float wb = Scan(pos, 0.0);
@@ -117,7 +115,7 @@ vec2 warp(vec2 uv){
 	float delta2 = dot(delta.xy, delta.xy);
 	float delta4 = delta2 * delta2;
 	float delta_offset = delta4 * warp_amount;
-	
+
 	vec2 warped = uv + delta * delta_offset;
 	return (warped - 0.5) / mix(1.0,1.2,warp_amount/5.0) + 0.5;
 }
@@ -151,7 +149,7 @@ float roll_line(vec2 uv){
 void fragment(){
 	vec2 pix = FRAGCOORD.xy;
 	vec2 pos = UV;
-	
+
 	float line = 0.0;
 	if(roll_line_amount > 0.0){
 		line = roll_line(pos);
@@ -163,21 +161,21 @@ void fragment(){
 		pos.x += (interference * (interference_amount + line * 6.0)) / resolution.x;
 	}
 
-	vec3 clr = Tri(pos);
+	vec3 clr = Tri(TEXTURE, pos);
 	if(aberation_amount > 0.0){
 		float chromatic = aberation_amount + line * 2.0;
 		vec2 chromatic_x = vec2(chromatic,0.0) / resolution.x;
 		vec2 chromatic_y = vec2(0.0, chromatic/2.0) / resolution.y;
-		float r = Tri(pos - chromatic_x).r;
-		float g = Tri(pos + chromatic_y).g;
-		float b = Tri(pos + chromatic_x).b;
+		float r = Tri(TEXTURE, pos - chromatic_x).r;
+		float g = Tri(TEXTURE, pos + chromatic_y).g;
+		float b = Tri(TEXTURE, pos + chromatic_x).b;
 		clr = vec3(r,g,b);
 	}
-	
+
 	if(grille_amount > 0.0)clr *= grille(pix);
 	clr *= 1.0 + scan_line_amount * 0.6 + line * 3.0 + grille_amount * 2.0;
 	if(vignette_amount > 0.0)clr *= vignette(pos);
-	
+
 	COLOR.rgb = clr;
-	COLOR.a = 1.0;
+	COLOR.a = COLOR.a;
 }

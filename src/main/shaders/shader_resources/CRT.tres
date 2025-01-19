@@ -1,8 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://clyj1qh7f4om4"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://clyj1qh7f4om4"]
 
-[ext_resource type="Shader" path="res://src/main/shaders/crt.gdshader" id="1_0if8f"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m72bm"]
+[ext_resource type="Shader" path="res://src/main/shaders/bulitin/crt.gdshader" id="1_0if8f"]
 
 [resource]
 shader = ExtResource("1_0if8f")
@@ -20,4 +18,3 @@ shader_parameter/roll_line_amount = 0.0
 shader_parameter/roll_speed = 8.0
 shader_parameter/scan_line_strength = -8.0
 shader_parameter/pixel_strength = -2.0
-shader_parameter/SCREEN_TEXTURE = SubResource("CompressedTexture2D_m72bm")

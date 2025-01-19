@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://de3def4pl0lqm"]
+
+[ext_resource type="Script" path="res://src/main/scenes/properity/vector2edit.gd" id="1_lubj2"]
+
+[node name="PropertyEditVector2" type="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(320, 48)
+anchors_preset = -1
+anchor_left = -0.02
+anchor_right = 0.258
+anchor_bottom = 0.074
+offset_left = 23.04
+offset_right = -22.216
+offset_bottom = 0.0480003
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_lubj2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "PROPERTY"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="X" type="SpinBox" parent="HBoxContainer"]
+layout_mode = 2
+max_value = 30000.0
+value = 1.0
+prefix = "X"
+
+[node name="Y" type="SpinBox" parent="HBoxContainer"]
+layout_mode = 2
+max_value = 30000.0
+prefix = "Y"
+
+[connection signal="value_changed" from="HBoxContainer/X" to="." method="_on_x_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/Y" to="." method="_on_y_value_changed"]
