@@ -51,10 +51,10 @@ vec3 Blur(sampler2D text, vec2 uv, float d, int samples) {
 
         t = 0.0;
         vec2 PixelOffset = vec2(d + 0.0005 * t, 0);
-        
+
         float Start = 2.0 / float(samples);
         vec2 Scale = 0.66 * 4.0 * 2.0 * PixelOffset.xy;
-        
+
         vec3 N = texture(text, uv + Circle(Start, float(samples), float(i)) * Scale).rgb;
         sum += N * W;
     }
@@ -71,7 +71,7 @@ void fragment() {
     float e = min(.30,pow(max(0.0,cos(uv.y*4.0+.3)-.75)*(s+0.5)*1.0,3.0))*25.0;
     float r = (250.0*(2.0*s));
     uv.x += abs(r*pow(min(.003,(-uv.y+(.01*mod(TIME, 5.0))))*3.0,2.0)) * wiggle;
-    
+
     d = 0.051+abs(sin(s/4.0));
     float c = max(0.0001,.002*d) * smear;
     vec4 final;
@@ -91,7 +91,7 @@ void fragment() {
     final.rgb = yiq2rgb(vec3(y, i, q)) - pow(s + e * 2.0, 3.0);
 
     final.a = 1.0;
-	
+
     COLOR = final;
 	COLOR.a = texture(TEXTURE,UV).a;
 }

@@ -6,6 +6,8 @@ extends Control
 @onready var save_image_button = get_node("%SaveIMG")
 @onready var loadfile = $LoadFile
 @onready var savefile = $SaveFile
+@onready var savepreset = $SavePreset
+@onready var loadpreset = $LoadPreset
 @onready var close_current = get_node("%CloseFile")
 
 # Image and the scaling nodes.
@@ -29,6 +31,7 @@ extends Control
 var aspect_ratio = 1
 
 var allowed = ["*.png", "*.jpg", "*.jpeg", "*.bmp"]
+var allowed_preset_formats = ["*.CNPreset"]
 
 var file_loaded = false
 
@@ -44,6 +47,9 @@ func _ready():
 	# Allowed Format List
 	loadfile.set_filters(PackedStringArray(allowed))
 	savefile.set_filters(PackedStringArray(allowed))
+	savepreset.set_filters(PackedStringArray(allowed_preset_formats))
+	loadpreset.set_filters(PackedStringArray(allowed_preset_formats))
+	
 	select_image_button.connect("pressed", Callable(self, "_on_select_image_button_pressed"))
 	save_image_button.connect("pressed", Callable(self, "_on_save_image_button_pressed"))
 	shader_editor_button.connect("pressed", Callable(self, "_on_shader_editor_button_pressed"))
@@ -168,7 +174,7 @@ func load_settings():
 
 func save_uniform_cache(path):
 	var uniform_cache = ConfigFile.new()
-	uniform_cache.set_value("shader", "shader", color_rect.material.shader.resource_path.name)
+	uniform_cache.set_value("shader", "shader", color_rect.material.shader.resource_path)
 	for i in shader_editor.uniform_cache:
 		uniform_cache.set_value("uniforms", i, color_rect.material.get_shader_parameter(i))
 		print("Saving uniform: " + i)
