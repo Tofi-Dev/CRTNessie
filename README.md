@@ -2,8 +2,8 @@
 
 CRTNessie is a lightweight tool that allows you to add shaders to images, adding a enchanced, or a retro look, depending on the shader of your choosing!
 
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/76478fa1-ea74-4a71-a094-d9b9eb1091a5" />
 
-***
 
 # ⚙️ Features
 
@@ -30,14 +30,12 @@ CRTNessie is a lightweight tool that allows you to add shaders to images, adding
 * If you’re familliar with the `.gdshader` langauge, you should be basically good to go.
 
 
-***
 
 # ❗Requirements
 
 Install Godot 4.3 or higher, you can download it [here](https://godotengine.org/pl/).
 
 
-***
 
 ## 🔨 Running Instructions:
 
@@ -51,7 +49,6 @@ Install Godot 4.3 or higher, you can download it [here](https://godotengine.org/
 3. Run it from here.
 
 
-***
 
 ## 📚 Exporting:
 
@@ -63,7 +60,6 @@ Install Godot 4.3 or higher, you can download it [here](https://godotengine.org/
 5. You’re basically done. :)
 
 
-***
 
 # ⬇️ Other Downloads:
 
