@@ -2,7 +2,8 @@
 
 CRTNessie is a lightweight tool that allows you to add shaders to images, adding a enchanced, or a retro look, depending on the shader of your choosing!
 
-<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/76478fa1-ea74-4a71-a094-d9b9eb1091a5" />
+<img width="1152" height="648" alt="image" src="https://github.com/user-attachments/assets/dc7698e9-2eab-4a5a-b1a1-750f023008f9" />
+
 
 
 # ⚙️ Features
