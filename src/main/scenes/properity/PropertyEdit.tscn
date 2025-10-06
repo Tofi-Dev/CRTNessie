@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://scs3v3s5popn"]
 
-[ext_resource type="Script" path="res://src/main/scenes/properity/property_edit.gd" id="1_5dwm0"]
+[ext_resource type="Script" uid="uid://d38svwyms7wgj" path="res://src/main/scenes/properity/property_edit.gd" id="1_5dwm0"]
 
 [node name="PropertyEdit" type="Panel"]
 clip_contents = true

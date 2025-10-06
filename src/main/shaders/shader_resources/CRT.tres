@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://clyj1qh7f4om4"]
 
-[ext_resource type="Shader" path="res://src/main/shaders/bulitin/crt.gdshader" id="1_0if8f"]
+[ext_resource type="Shader" uid="uid://d2oxumi1ypr3y" path="res://src/main/shaders/bulitin/crt.gdshader" id="1_0if8f"]
 
 [resource]
 shader = ExtResource("1_0if8f")

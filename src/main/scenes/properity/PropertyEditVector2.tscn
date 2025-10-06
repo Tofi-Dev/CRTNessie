@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://de3def4pl0lqm"]
 
-[ext_resource type="Script" path="res://src/main/scenes/properity/vector2edit.gd" id="1_lubj2"]
+[ext_resource type="Script" uid="uid://bnc5bf2s55v8u" path="res://src/main/scenes/properity/vector2edit.gd" id="1_lubj2"]
 
 [node name="PropertyEditVector2" type="Panel"]
 clip_contents = true

@@ -1,18 +1,18 @@
 [gd_scene load_steps=24 format=3 uid="uid://cdpriq3ceeans"]
 
 [ext_resource type="Theme" uid="uid://cbu3vggrnr15" path="res://src/main/themes/default.tres" id="1_0imq3"]
-[ext_resource type="Script" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
+[ext_resource type="Script" uid="uid://ceybn0a0kfm3b" path="res://src/main/scenes/main.gd" id="1_s7fn7"]
 [ext_resource type="Texture2D" uid="uid://jv87xuvpxc24" path="res://src/main/art/grid.png" id="3_m70oi"]
 [ext_resource type="AudioStream" uid="uid://crq12et1jvw2v" path="res://src/main/sfx/outcome-success.mp3" id="3_tdi5y"]
 [ext_resource type="Texture2D" uid="uid://maj7clx5bxcm" path="res://src/main/art/logohd.png" id="4_ddcem"]
 [ext_resource type="Texture2D" uid="uid://cdcnp8w7h724s" path="res://src/main/art/buttons/chicago/logopixel.png" id="4_h1ifi"]
 [ext_resource type="Texture2D" uid="uid://cfyfdc7dfoh8d" path="res://src/main/art/buttons/grids/grid.png" id="5_6vkxv"]
 [ext_resource type="Texture2D" uid="uid://023q05eg68i0" path="res://src/main/art/buttons/default/logopixel.png" id="6_iwdne"]
-[ext_resource type="Script" path="res://src/main/scenes/credits.gd" id="7_fgh44"]
+[ext_resource type="Script" uid="uid://d1jbc08ftko8t" path="res://src/main/scenes/credits.gd" id="7_fgh44"]
 [ext_resource type="Texture2D" uid="uid://cejh5uf5jgmjw" path="res://src/main/art/buttons/grids/grid95.png" id="7_qyeat"]
-[ext_resource type="Script" path="res://src/main/scenes/Credits_Button.gd" id="7_rryy0"]
+[ext_resource type="Script" uid="uid://dgfbt6gk1keqo" path="res://src/main/scenes/Credits_Button.gd" id="7_rryy0"]
 [ext_resource type="Material" uid="uid://clyj1qh7f4om4" path="res://src/main/shaders/shader_resources/CRT.tres" id="9_1c2k5"]
-[ext_resource type="Script" path="res://src/main/scenes/shader_editor.gd" id="13_f8lx2"]
+[ext_resource type="Script" uid="uid://djg85es3j1wr2" path="res://src/main/scenes/shader_editor.gd" id="13_f8lx2"]
 [ext_resource type="PackedScene" uid="uid://scs3v3s5popn" path="res://src/main/scenes/properity/PropertyEdit.tscn" id="14_lw2q4"]
 [ext_resource type="PackedScene" uid="uid://de3def4pl0lqm" path="res://src/main/scenes/properity/PropertyEditVector2.tscn" id="15_1wcj2"]
 
@@ -85,7 +85,6 @@ access = 2
 use_native_dialog = true
 
 [node name="SaveFile" type="FileDialog" parent="."]
-ok_button_text = "Save"
 access = 2
 use_native_dialog = true
 
@@ -93,7 +92,6 @@ use_native_dialog = true
 unique_name_in_owner = true
 auto_translate_mode = 1
 size = Vector2i(336, 139)
-ok_button_text = "Save"
 access = 2
 use_native_dialog = true
 
@@ -278,6 +276,7 @@ tooltip_text = "Change the Program's theme."
 selected = 1
 item_count = 3
 popup/item_0/text = "Default"
+popup/item_0/id = 0
 popup/item_1/text = "HD"
 popup/item_1/id = 1
 popup/item_2/text = "Chicago"
